@@ -8,5 +8,5 @@ This is the website that is available under http://jboss.org/docker that shows w
     bundle install
     rake clean preview
 
-Then go to http://localhost:4242
+Then go to [http://localhost:4242](http://localhost:4242)
 

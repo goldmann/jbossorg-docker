@@ -20,22 +20,25 @@ p We do publish our images under the official <a href="https://hub.docker.com/u/
   .large-6.columns
     h4 Goal
     p We provide Docker images of our <a href="http://www.jboss.org/projects/">JBoss projects</a> to make it easy to use them and let you focus on using them instead of thinking about packaging.
-    p The Docker image delivery format makes it easy to extend/reuse images. It is a good idea to use our images as the base for your image (<code>FROM</code> command). 
+    p The Docker image delivery format makes it easy to extend/reuse images. It is a good idea to use our images as the base for your image (<code>FROM</code> command in your <a href="http://docs.docker.com/reference/builder/">Dockerfile</a>). 
 
   .large-6.columns
     h4 Documentation
-    p Every image is different, therefore please consult the Readme linked to each image. If you don't find the answer there - don't hesitate to contact us.
+    p Every image is different therefore please consult readme's linked to each image. If you don't find the answer there - don't hesitate to contact us.
 
 .row
   .large-6.columns
     h4 Issues and enhancements
-    p If you have issues with images listed below or you have an idea on how to make them better please <a href='https://github.com/jboss/dockerfiles/issues/new'>open a new ticket</a>.
+    p If you have issues with images listed below or you have an idea on how to make them better please <a href="https://github.com/jboss/dockerfiles/issues/new">open a new ticket</a>.
+    p Please start the ticket name with a <code>[image-name]</code> prefix, eg. <code>[jboss/wildfly]</code>.
 
   .large-6.columns
     h4 Contact
     p We're there for you on IRC in the <code>#jboss-docker</code> channel on Freenode.
 
 h3 Available Docker images
+
+p Below you can find the list of images we crafted for you.
 
 - site.images.each do |project|
 
@@ -44,34 +47,54 @@ h3 Available Docker images
       h4 #{project.name}
 
       p
-        img src='#{project.image_url}'
+        a href='#{project.url}'
+          img src='#{project.image_url}'
       p #{project.description}
       a[class="small button" href='#{project.url}'] Learn more &raquo;
         
     div[class="large-7 columns"]
 
-      h5 Images
+      div
 
-      - project.images.each do |image|
+        h5 Images
 
-        .row.collapse
-          .small-3.large-2.columns
-            span.prefix.right Get it
-          .small-9.large-10.columns
-              input[type="text" id="pull-wildfly" value="docker pull #{image.name}" readonly="readonly"]
+        - project.images.each do |image|
 
-        ul.button-group
-          li
-            a[class="tiny button secondary" href="https://registry.hub.docker.com/u/#{image.name}/"] Docker Hub
-          li
-            a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/Dockerfile'] Dockerfile
-          li
-            a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/README.md'] Readme
+          .row.collapse
+            .small-9.large-9.columns
+                input[type="text" id="pull-wildfly" value="docker pull #{image.name}" readonly="readonly"]
+            .small-3.large-3.columns.more-info-link[name="#{image.name.gsub('/', '_').strip}"]
+              a.button.postfix href="#"
+                span More info &raquo;
 
-        p #{image.description}
+          div.more-info[style="clear: both; display: none;" name="#{image.name.gsub('/', '_').strip}"]
+            p #{image.description}
+
+            ul.button-group.right
+              li
+                a[class="tiny button secondary" href="https://registry.hub.docker.com/u/#{image.name}/"] Docker Hub
+              li
+                a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/Dockerfile'] Dockerfile
+              li
+                a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/README.md'] Readme
+
 
   hr
 
 h4 I don't see my project!
 
-p We're happy to add your project to the list. Please check our guid on how to contribute to the JBoss Dockerfiles repository.
+p We're happy to add your project to the list. If you have a Dockerfile ready - please <a href="https://github.com/jboss/dockerfiles/pulls">open a pull request</a>. If you don't - <a href="https://github.com/jboss/dockerfiles/issues/new">file a new ticket</a> and we see what we can do :)
+
+
+javascript:
+  $("input[type='text']").click(function () {
+       $(this).select();
+  });
+
+  $("div.more-info-link").click(function(e) {
+    $("div.more-info[name=" + $(this).attr('name') + "]").fadeToggle(300);
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  });
+
