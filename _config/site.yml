@@ -1,4 +1,10 @@
 name: Docker at JBoss
 title: Docker at JBoss
 org: JBoss
-base_url: ''
+
+profiles:
+  staging:
+    base_url: http://bitrain.pl/jbossorg-docker/
+    deploy:
+      host: bitrain.pl
+      path: /var/www/bitrain.pl/jbossorg-docker/
