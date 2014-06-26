@@ -3,32 +3,75 @@ layout: base
 ---
 .row
   .large-12.columns
-    h1 Wow You're awestruct! 
+    h1 Dokah dokah dokah
     hr
 
-.row
-  .large-12.columns
-    .panel
-      h3 Get started
-      p This site is all setup to use Foundation 4 with Awestruct.
-      a.button href='http://foundation.zurb.com' Check out Foundation 4
-      a.button.secondary href='http://awestruct.org' Check out Awestruct
+p
+  img src='http://www.docker.com/static/img/nav/docker-logo-loggedout.png'
+h4.subheader The <a href="http://www.docker.com/">Docker project</a> revolutionizes thinking about software delivery making it easy to build and share images with your content. We at <a href="http://jboss.org/">JBoss</a> love the idea behind Docker and ship images with our projects. Just for you.
+
+p Pssst. If you're new to Docker please take 8 minutes to <a href="http://www.docker.com/whatisdocker/">watch the introduction to Docker</a>. And of course <a href="http://www.docker.com/tryit/">give it a try</a>!
+
+h3 JBoss projects and Docker
+
+p We do publish our images under the official <a href="https://hub.docker.com/u/jboss/"></code>jboss</code> account</a>. Every image is built from Dockerfiles available in our <a href="https://github.com/jboss/dockerfiles">GitHub repository</a>. To keep them up to date we set up <a href="http://docs.docker.com/docker-hub/builds/">automated builds</a> that track the source and rebuild images (only) if necessary. Additionally images are linked to each other. If the image we base on was modified - we rebuild our image providing you the freshest image you deserve.
 
 .row
-  .large-4.columns
-    h3 About 
-    p Awestruct is a framework for creating static HTML sites. It's inspired by the awesome Jekyll utility in the same genre. Additionally, Awestruct integrates technologies such as Compass, Markdown and Haml.
-    p
-      a.button href='http://awestruct.org' View details &raquo; 
+  .large-6.columns
+    h4 Goal
+    p We provide Docker images of our <a href="http://www.jboss.org/projects/">JBoss projects</a> to make it easy to use them and let you focus on using them instead of thinking about packaging.
+    p The Docker image delivery format makes it easy to extend/reuse images. It is a good idea to use our images as the base for your image (<code>FROM</code> command). 
 
-  .large-4.columns
-    h3 Goal
-    p The goal of Awestruct is to make it trivially easy to bake out non-trivial static websites. In addition to providing template-driven site creation (using Haml), Awestruct provides facilities for easily priming the site creation with additional non-page data.
-    p
-      a.button href='http://awestruct.org' View details &raquo; 
+  .large-6.columns
+    h4 Documentation
+    p Every image is different, therefore please consult the Readme linked to each image. If you don't find the answer there - don't hesitate to contact us.
 
-  .large-4.columns
-    h3 Concept
-    p The core concept of Awestruct is that of structures, specifically Ruby OpenStruct structures. The struct aspect allows arbitrary, schema-less data to be associated with a specific page or the entire site.
-    p
-      a.button href='http://awestruct.org' View details &raquo; 
+.row
+  .large-6.columns
+    h4 Issues and enhancements
+    p If you have issues with images listed below or you have an idea on how to make them better please <a href='https://github.com/jboss/dockerfiles/issues/new'>open a new ticket</a>.
+
+  .large-6.columns
+    h4 Contact
+    p We're there for you on IRC in the <code>#jboss-docker</code> channel on Freenode.
+
+h3 Available Docker images
+
+- site.images.each do |project|
+
+  .row
+    div[class="large-5 columns"]
+      h4 #{project.name}
+
+      p
+        img src='#{project.image_url}'
+      p #{project.description}
+      a[class="small button" href='#{project.url}'] Learn more &raquo;
+        
+    div[class="large-7 columns"]
+
+      h5 Images
+
+      - project.images.each do |image|
+
+        .row.collapse
+          .small-3.large-2.columns
+            span.prefix.right Get it
+          .small-9.large-10.columns
+              input[type="text" id="pull-wildfly" value="docker pull #{image.name}" readonly="readonly"]
+
+        ul.button-group
+          li
+            a[class="tiny button secondary" href="https://registry.hub.docker.com/u/#{image.name}/"] Docker Hub
+          li
+            a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/Dockerfile'] Dockerfile
+          li
+            a[class="tiny button secondary" href='https://github.com/jboss/dockerfiles/blob/master/#{image.path}/README.md'] Readme
+
+        p #{image.description}
+
+  hr
+
+h4 I don't see my project!
+
+p We're happy to add your project to the list. Please check our guid on how to contribute to the JBoss Dockerfiles repository.
